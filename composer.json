@@ -1,0 +1,32 @@
+{
+    "name": "thopra/styleguide",
+    "description": "Styleguide skelleton based on kss-php",
+    "keywords": [
+        "kss",
+        "styleguide",
+        "css documentation"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/finder": "~2.1",
+        "scan/kss-php": "1.*",
+        "twbs/bootstrap": "3.3.*"
+    },
+    "authors": [
+        {
+            "name": "Thomas Prangenberg",
+            "email": "t@thomas-prangenberg.de",
+            "homepage": "http://www.thomas-prangenberg.de"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Thopra\\": "Classes/"
+        }
+    },
+    "config": {
+        "bin-dir": "bin",
+        "vendor-dir": "Packages/Libraries"
+    }
+}
