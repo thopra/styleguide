@@ -21,6 +21,11 @@ abstract class AbstractSource {
 	protected $name;
 
 	/**
+	 * @var string
+	 */
+	protected $partialDir = 'Partials';
+
+	/**
 	 * @var \Thopra\Styleguide\Parser\Kss\Parser
 	 */
 	protected $parser;
@@ -48,6 +53,16 @@ abstract class AbstractSource {
 	public function setKey($key) 
 	{
 		$this->key = $key;
+	}
+
+	public function getPartialDir() 
+	{
+		return $this->partialDir;
+	}
+
+	public function setPartialDir($dir) 
+	{
+		$this->partialDir = $dir;
 	}
 
 	public function getSections()
@@ -78,7 +93,7 @@ abstract class AbstractSource {
 
 	public function parse()
 	{
-		$this->parser = new Parser\Kss\Parser($this->getPath());
+		$this->parser = new Parser\Kss\Parser($this->getPath(), $this);
 	}
 
 	/**

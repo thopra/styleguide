@@ -4,9 +4,22 @@ namespace Thopra\Styleguide\Parser\Kss;
 
 Class Parser extends \Scan\Kss\Parser {
 
+	protected $source;
+
+	public function __construct($paths, $source = null)
+    {
+        parent::__construct($paths);
+        $this->source = $source;
+    }
+
 	public function removeSection($reference)
 	{
 		unset($this->sections[$reference]);
+	}
+
+	public function getSource()
+	{
+		return $this->source;
 	}
 
 	/**
@@ -18,6 +31,7 @@ Class Parser extends \Scan\Kss\Parser {
     protected function addSection($comment, \splFileObject $file)
     {
         $section = new Section($comment, $file);
+        $section->setParser($this);
         $this->sections[$section->getReference(true)] = $section;
         $this->sectionsSortedByReference = false;
     }

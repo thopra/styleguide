@@ -4,7 +4,7 @@ namespace Thopra\Styleguide\Source;
 
 class BootstrapSource extends AbstractSource implements SourceInterface {
 	
-	protected $path = 'Templates/Frameworks/Bootstrap/Reference';
+	protected $path = 'Templates/Frameworks/Bootstrap';
 	protected $key = 'bootstrap3';
 	protected $name = 'Bootstrap';
 
