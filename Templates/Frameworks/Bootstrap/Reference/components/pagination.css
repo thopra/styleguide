@@ -4,7 +4,7 @@ Pagination
 Provide pagination links for your site or app with the multi-page pagination component, or the simpler pager alternative.
 
 Markup:
-<ul class="pagination {{modifier_class}}">
+<ul class="pagination $modifierClass">
   <li><a href="#">&laquo;</a></li>
   <li><a href="#">Previous</a></li>
   <li><a href="#">1</a></li>

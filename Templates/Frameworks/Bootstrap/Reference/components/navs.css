@@ -4,7 +4,7 @@ Navs
 Navbars are responsive meta components that serve as navigation headers for your application or site. They begin collapsed (and are toggleable) in mobile views and become horizontal as the available viewport width increases.
 
 Markup:
-<ul class="nav {{modifier_class}}" role="tablist">
+<ul class="nav $modifierClass" role="tablist">
   <li class="active"><a href="#">Home</a></li>
   <li><a href="#">Profile</a></li>
   <li><a href="#">Messages</a></li>
