@@ -1,6 +1,6 @@
 {
     "name": "thopra/styleguide",
-    "description": "Styleguide skelleton based on kss-php",
+    "description": "Styleguide skeleton based on kss-php, containing documentation of bootstrap components",
     "keywords": [
         "kss",
         "styleguide",
