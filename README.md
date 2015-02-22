@@ -1,5 +1,6 @@
 # styleguide
-Implementation of kss-php intended to help quickly creating a styleguide
+Implementation of kss-php intended to help quickly creating a styleguide.
+This is still in very early development.
 
 ## Use composer to get the dependencies
 
