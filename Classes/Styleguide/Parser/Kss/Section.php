@@ -26,6 +26,8 @@ Class Section extends \Scan\Kss\Section {
     public function getMarkup()
     {
         $markup = parent::getMarkup();
+
+        return $markup;
     }
 
     /**
