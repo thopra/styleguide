@@ -1,5 +1,5 @@
 # styleguide
-Implementation of kss-php intended to help quickly creating a styleguide.
+Implementation of [kss-php](https://github.com/scaninc/kss-php) intended to help quickly creating a styleguide.
 This is still in very early development.
 
 ## Use composer to get the dependencies
@@ -45,5 +45,16 @@ This is still in very early development.
     $styleguide->addSource($myReference);
     
 Or you can write your own source class that implements \Thopra\Styleguide\Source\SourceInterface
+
+## Additional Features
+In Addition to the basic [KSS-Syntax](https://github.com/kneath/kss/blob/master/SPEC.md), kss-php features a "Markup:" comment section in which you can provide some example Markup. This library extends this idea with a new Keyword: "Partial", that specifies a path to a Partial, that should be rendered as the example Markup.
+
+    /*
+     * Partial: Components/Dropdown
+     *
+     * PartialParams: {"foo": "bar"}
+     */
+
+Should render the contents of <Path to Partials in Source>/Components/Dropdown.phtml while setting the variable $foo to "bar".
 
 
