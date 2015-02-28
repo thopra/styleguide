@@ -1,7 +1,7 @@
 <?php
 
 require_once('../Packages/Libraries/autoload.php');
-$styleguide = new \Thopra\Styleguide\Styleguide('less', 'Example Styleguide');
+$styleguide = new \Thopra\Styleguide\Styleguide();
 
 $bootstrap = new \Thopra\Styleguide\Source\BootstrapSource();
 //exclude section "code"

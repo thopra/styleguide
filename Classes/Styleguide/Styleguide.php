@@ -41,13 +41,16 @@ Class Styleguide {
 	 * @param mixed $paths
 	 * @return void
 	 */
-	public function __construct($path, $title = 'Styleguide') 
+	public function __construct($title = 'Styleguide', $path = false) 
 	{
 		$this->setTemplateDir($this->defaultTemplateDir);
 		$this->setTitle($title);
 
-		$source = new Source\Source($path, $this->src, "Components");
-		$this->addSource($source);
+		if ($path) {
+			$source = new Source\Source($path, $this->src, $title);
+			$this->addSource($source);
+		}
+		
 
 		if (isset($_GET['ref'])) {
 			$this->setRef($_GET['ref']);
@@ -162,6 +165,9 @@ Class Styleguide {
 	 */
 	public function render()
 	{
+		if (!count($this->sources)) {
+			throw new \Exception("No Source specified. Please add a source or specify a path in the constructor.");
+		}
 		if ($this->ref) {
 			$this->displayReference($this->sources[$this->src], $this->ref);
 		} else {
