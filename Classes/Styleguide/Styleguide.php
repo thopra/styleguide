@@ -12,7 +12,7 @@ Class Styleguide {
 	/**
 	 * @var string
 	 */
-	protected $defaultTemplateDir = 'Templates';
+	protected $defaultTemplateDir = '';
 
 	/**
 	 * @var mixed
@@ -43,6 +43,7 @@ Class Styleguide {
 	 */
 	public function __construct($title = 'Styleguide', $path = false) 
 	{
+		$this->defaultTemplateDir = dirname(dirname(dirname(__FILE__))) . '/Templates';
 		$this->setTemplateDir($this->defaultTemplateDir);
 		$this->setTitle($title);
 
@@ -237,6 +238,10 @@ Class Styleguide {
 	 */
 	private function getAbsTemplateDir($dir)
 	{
+		if(is_dir($dir)) {
+			return $dir;
+		}
+
 		if(is_dir(realpath($dir))) {
 			return realpath($dir);
 		}
