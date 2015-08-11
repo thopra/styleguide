@@ -24,9 +24,9 @@ class Partial {
 	public function render($render = true)
 	{
 		extract($this->vars);
-		$oid = ob_start();
+		ob_start();
 		include($this->file);
-		$content = ob_get_contents($oid);
+		$content = ob_get_contents();
 		ob_end_clean();
 
 		if ($render) {
