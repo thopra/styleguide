@@ -2,8 +2,12 @@
 
 namespace Thopra\Styleguide\Source;
 use Thopra\Styleguide\Parser;
+use Thopra\Styleguide\View;
 
 abstract class AbstractSource {
+
+	const PARTIAL_TYPE_PHP = 'phtml';
+	const PARTIAL_TYPE_FLUID = 'fluid';
 
 	/**
 	 * @var string
@@ -23,6 +27,11 @@ abstract class AbstractSource {
 	/**
 	 * @var string
 	 */
+	protected $partialType;
+
+	/**
+	 * @var string
+	 */
 	protected $partialDir = 'Partials';
 
 	/**
@@ -33,6 +42,7 @@ abstract class AbstractSource {
 	public function __construct()
 	{
 		$this->parse();
+		$this->partialType = self::PARTIAL_TYPE_PHP;
 	}
 
 	public function getName() 
@@ -63,6 +73,20 @@ abstract class AbstractSource {
 	public function setPartialDir($dir) 
 	{
 		$this->partialDir = $dir;
+	}
+
+	public function getPartialType() 
+	{
+		return $this->partialDir;
+	}
+
+	public function setPartialType($type = null) 
+	{
+		if ($type == self::PARTIAL_TYPE_FLUID) {
+			$this->partialType = self::PARTIAL_TYPE_FLUID;
+		} else {
+			$this->partialType = self::PARTIAL_TYPE_PHP;
+		}
 	}
 
 	public function getSections()
@@ -111,22 +135,22 @@ abstract class AbstractSource {
 	{
 		return $this->parser;
 	}
-/*
-	protected function setSections()
+
+	public function renderPartial($partialName, $vars = array(), $directOutput = true)
 	{
-		$finder = new Finder();
-        $finder->files()->name('/\.(css|sass|scss|less|styl(?:us)?)$/')->in($this->getPath());
-   
-        foreach ($finder as $fileInfo) {
-            $file = new \splFileObject($fileInfo);
-            $commentParser = new Parser\Kss\CommentParser($file);
-            foreach ($commentParser->getBlocks() as $commentBlock) {
-                if (Parser\Kss\Parser::isKssBlock($commentBlock)) {
-                    $section = new \Scan\Kss\Section($commentBlock, $file);
-        			$this->sections[$section->getReference(true)] = $section;
-                }
-            }
-        }
-	}*/
+		switch ($this->partialType) {
+			case self::PARTIAL_TYPE_FLUID:
+				$partial = new View\FluidPartial($partialName, $this);
+				break;
+
+			case self::PARTIAL_TYPE_PHP:
+			default:
+				$partial = new View\Partial($partialName, $this);
+				break;
+		}
+		
+		$partial->setVars($vars);   
+		return $partial->render($directOutput);  
+	}
 
 }

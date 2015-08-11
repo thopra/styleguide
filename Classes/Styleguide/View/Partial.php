@@ -21,10 +21,19 @@ class Partial {
 		$this->setFile();
 	}
 
-	public function render()
+	public function render($render = true)
 	{
 		extract($this->vars);
+		$oid = ob_start();
 		include($this->file);
+		$content = ob_get_contents($oid);
+		ob_end_clean();
+
+		if ($render) {
+			echo $content;
+		}
+		
+		return $content;
 	}
 
 	public function setVars($data)

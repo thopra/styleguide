@@ -11,7 +11,8 @@
         "php": ">=5.3.3",
         "symfony/finder": "~2.1",
         "scan/kss-php": "1.*",
-        "twbs/bootstrap": "3.3.*"
+        "twbs/bootstrap": "3.3.*",
+        "namelesscoder/fluid": "*"
     },
     "authors": [
         {
@@ -20,6 +21,8 @@
             "homepage": "http://www.thomas-prangenberg.de"
         }
     ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Thopra\\": "Classes/"

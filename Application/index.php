@@ -2,15 +2,12 @@
 
 require_once('../Packages/Libraries/autoload.php');
 $styleguide = new \Thopra\Styleguide\Styleguide();
+$styleguide->setTitle('Test Styleguide');
 
-$bootstrap = new \Thopra\Styleguide\Source\BootstrapSource();
-//exclude section "code"
-$bootstrap->excludeSections(array('1.1'));
-$styleguide->addSource($bootstrap);
+$source = new \Thopra\Styleguide\Source\Source(dirname(__FILE__), 'default', 'Fluid source');
+$source->setPartialType(\Thopra\Styleguide\Source\AbstractSource::PARTIAL_TYPE_FLUID);
 
-$typo3 = new \Thopra\Styleguide\Source\Typo3Source();
-$styleguide->addSource($typo3);
-
+$styleguide->addSource($source);
 ?>
 
 <!DOCTYPE html>
@@ -29,6 +26,10 @@ $styleguide->addSource($typo3);
 <body>
 
 	<?php $styleguide->render(); ?>
+
+	<?php 
+		$source->renderPartial('Test');
+	?>
 
     <script src="../Packages/Libraries/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
 
