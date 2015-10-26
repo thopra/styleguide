@@ -1,58 +1,147 @@
-@import (reference) "../../Packages/Libraries/twbs/bootstrap/less/bootstrap.less";;
+@import "../../Packages/Libraries/twbs/bootstrap/less/bootstrap.less";
+@import "../../Packages/Libraries/components/font-awesome/less/font-awesome.less";
 
+@styleguide-background: @gray-dark;
+@styleguide-ui-border: fade(#fff, 10%);
 
-#wrapper {
-	&:extend(.container all);
+.styleguide__icon {
+  display: inline-block;
+  font: normal normal normal @fa-font-size-base/@fa-line-height-base FontAwesome; // shortening font declaration
+  font-size: inherit; // can't have font-size inherit on line above, so need to override
+  text-rendering: auto; // optimizelegibility throws things off #1094
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-	main {
-		.make-row();
+.styleguide {
 
+	background: @styleguide-background;
+	color: #BBB;
+	height: 100vh;
+	position: relative;
+
+	> footer {
+		position: absolute;
+		right: 15px;
+		bottom: 0;
+		left: 300px;
+	}
+
+	&__toolbar {
+		position: absolute;
+		right: 15px;
+		left: 15px;
+		top: 0;
+		.list-unstyled();
+		.list-inline();
+		border-bottom: 1px @styleguide-ui-border solid;
+		> li {
+			float: right;
+		}
+	}
+
+	&__viewports {
+		> ul {
+			.list-inline();
+
+			> li {
+				padding: 10px;
+				cursor: pointer;
+				color: @gray;
+				&::before { 
+					.styleguide__icon();
+					font-size: 30px;
+					content: @fa-var-desktop; 
+				}
+
+				&.styleguide__viewports {
+					&__xs::before { content: @fa-var-mobile; }
+					&__sm::before { content: @fa-var-tablet; }
+					&__md::before { content: @fa-var-laptop; }
+				}
+			}
+		}
+	}
+
+	&__block {
+		padding: 30px 0;
+		border-bottom: 2px @gray-lighter solid;
+
+		&__preview {
+			padding: @grid-gutter-width;
+			box-shadow: 0 0 5px rgba(0,0,0,0.5);
+			background: #FFF; 
+		}
+		&__elements { }
+		&__html { 
+			.well();
+			pre {
+				margin-top: 10px;
+				padding: 0;
+			}
+			margin: 10px 0; 
+
+			&__toggle {
+
+			}
+		}
+
+		&__filename {
+			.badge();
+			.pull-right();
+		}
+
+	}
+
+	&__wrapper {
+		&:extend(.container all);
+
+		main {
+		/* 	.make-row();
+		
 		> article {
 			.make-sm-column(9);
 		}
 		> nav#sections {			
 			.make-sm-column(3);
 			font-size: @font-size-small;
+		} */
+		}
+
+	}
+
+	&__canvas {
+		position: absolute;
+		top: 60px;
+		left: 300px;
+		bottom: 30px;
+		right: 15px;
+		width: auto;
+		height: auto;
+		box-shadow: 2px 2px 5px fade(#000, 70%); 
+		background: #000;
+
+		&__frame {
+
+			overflow: hidden;
+			border-right: 4px @gray solid;
+			padding-right: 4px;
+			background: @gray-dark;
+			width: 100%;
+			height: 100%;
+
+			> iframe {
+				width: 100%;
+				height: 100%;
+			}
+
 		}
 	}
 
-}
-
-#logo {
-	width: 25px;
-	float: left;
-	margin: 0 10px 0 0;
-
-	.logo {
-		margin: 0;
+	&__logo {
+		width: 25px;
+		float: left;
+		margin: 0 10px 0 0;
 	}
-}
 
-.styleguide {
-	padding: 30px 0;
-	border-bottom: 2px @gray-lighter solid;
-}
-
-.styleguide__preview {
-	padding: @grid-gutter-width;
-	box-shadow: 0 0 5px rgba(0,0,0,0.5);
-	background: #FFF; 
-}
-.styleguide__elements { }
-.styleguide__html { 
-	.well();
-	pre {
-		margin-top: 10px;
-		padding: 0;
-	}
-	margin: 10px 0; 
-
-	.styleguide__html__toggle {
-
-	}
-}
-
-.styleguide__filename {
-	.badge();
-	.pull-right();
 }

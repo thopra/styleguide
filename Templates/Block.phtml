@@ -1,23 +1,23 @@
-<div class="styleguide" id="r<?php echo $vars['section']->getReference(); ?>">
-    <h3 class="styleguide__header">
-        <span class="styleguide__title"><?php echo $vars['section']->getDescriptionTitle(); ?></span>
-        <span class="styleguide__filename"><?php echo $vars['section']->getFilename(); ?></span>
+<div class="styleguide__block" id="r<?php echo $vars['section']->getReference(); ?>">
+    <h3 class="styleguide__block__header">
+        <span class="styleguide__block__title"><?php echo $vars['section']->getDescriptionTitle(); ?></span>
+        <span class="styleguide__block__filename"><?php echo $vars['section']->getFilename(); ?></span>
     </h3>
 
-    <div class="styleguide__description">
+    <div class="styleguide__block__description">
         <p><?php echo nl2br($vars['section']->getDescriptionText()); ?></p>
         <?php
             if (count($vars['section']->getModifiers()) > 0) {
         ?>
-            <ul class="styleguide__modifiers">
+            <ul class="styleguide__block__modifiers">
                 <?php foreach ($vars['section']->getModifiers() as $modifier) { ?>
                     <li>
-                        <span class="styleguide__modifier-name <?php echo ($modifier->isExtender()) ? 'styleguide__modifier-name--extender' : ''; ?>">
+                        <span class="styleguide__block__modifier-name <?php echo ($modifier->isExtender()) ? 'styleguide__modifier-name--extender' : ''; ?>">
                             <?php echo $modifier->getName(); ?>
                         </span>
                             <?php if ($modifier->isExtender()) { ?>
                                 @extend
-                                <span class="styleguide__modifier-name"><?php echo $modifier->getExtendedClass(); ?></span>
+                                <span class="styleguide__block__modifier-name"><?php echo $modifier->getExtendedClass(); ?></span>
                             <?php } ?>
                         <?php if ($modifier->getDescription()) { ?>
                             - <?php echo $modifier->getDescription(); ?>
@@ -30,10 +30,10 @@
         <?php
             if (count($vars['section']->getParameters()) > 0) {
         ?>
-            <ul class="styleguide__parameters">
+            <ul class="styleguide__block__parameters">
                 <?php foreach ($vars['section']->getParameters() as $parameter) { ?>
                     <li>
-                        <span class="styleguide__parameter-name">
+                        <span class="styleguide__block__parameter-name">
                             <?php echo $parameter->getName(); ?>
                         </span>
                         <?php if ($parameter->getDescription()) { ?>
@@ -47,30 +47,30 @@
         <?php
             if ($vars['section']->getCompatibility()) {
         ?>
-            <p class="styleguide__compatibility"><?php echo nl2br($vars['section']->getCompatibility()); ?></p>
+            <p class="styleguide__block__compatibility"><?php echo nl2br($vars['section']->getCompatibility()); ?></p>
         <?php } ?>
     </div>
 
     <?php
         if ($vars['section']->hasMarkup()) {
     ?>
-    <div class="styleguide__preview">
-        <div class="styleguide__elements">
-            <div class="styleguide__element">
+    <div class="styleguide__block__preview">
+        <div class="styleguide__block__elements">
+            <div class="styleguide__block__element">
                 <?php echo $vars['section']->getMarkupNormal(); ?>
             </div>
             <?php foreach ($vars['section']->getModifiers() as $modifier) { ?>
-                <div class="styleguide__element styleguide__element--modifier <?php ($modifier->isExtender()) ? 'styleguide__element--extender' : ''; ?>">
-                    <span class="styleguide__element__modifier-label <?php echo ($modifier->isExtender()) ? 'styleguide__element__modifier-label--extender' : ''; ?>"><?php echo $modifier->getName(); ?></span>
+                <div class="styleguide__block__element styleguide__element--modifier <?php ($modifier->isExtender()) ? 'styleguide__element--extender' : ''; ?>">
+                    <span class="styleguide__block__element__modifier-label <?php echo ($modifier->isExtender()) ? 'styleguide__element__modifier-label--extender' : ''; ?>"><?php echo $modifier->getName(); ?></span>
                     <?php echo $modifier->getExampleHtml(); ?>
                 </div>
             <?php } ?>
         </div>
 
-        <div class="styleguide__html">
-            <a href="#html_<?php echo str_replace(".", "_", $vars['section']->getReference()); ?>" class="styleguide__html__toggle" data-toggle="collapse">Markup anzeigen</a>
+        <div class="styleguide__block__html">
+            <a href="#html_<?php echo str_replace(".", "_", $vars['section']->getReference()); ?>" class="styleguide__block__html__toggle" data-toggle="collapse">Markup anzeigen</a>
             <div class="collapse" id="html_<?php echo str_replace(".", "_", $vars['section']->getReference()); ?>">
-                <pre class="styleguide__code"><code class="html"><?php echo htmlentities($vars['section']->getMarkupNormal('{class}')); ?></code></pre>
+                <pre class="styleguide__block__code"><code class="html"><?php echo htmlentities($vars['section']->getMarkupNormal('{class}')); ?></code></pre>
             </div>
         </div>
     </div>

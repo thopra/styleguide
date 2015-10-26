@@ -1,0 +1,33 @@
+<div class="styleguide">
+	<ul class="styleguide__toolbar">
+		<li class="styleguide__viewports">
+			<ul>
+				<li class="styleguide__viewports__xs" data-width="310"></li>
+				<li class="styleguide__viewports__sm" data-width="768"></li>
+				<li class="styleguide__viewports__md" data-width="981"></li>
+				<li class="styleguide__viewports__lg" data-width="1141"></li>
+			</ul>
+		</li>
+		<li class="styleguide__enlarge"></li>
+	</ul>
+
+	<?php // $Styleguide->displayTemplate('Menu'); ?>
+
+	<div class="styleguide__canvas">
+		<div class="styleguide__canvas__frame">
+			<iframe src="reference.php" frameborder="0"></iframe>
+		</div>
+	</div>
+
+    <footer>
+    <?php echo $Styleguide->getTitle(); ?> - <?php echo $Styleguide->lastModified(); ?>
+    </p>
+    </footer>
+
+</div>
+
+
+<script src="../Packages/Libraries/components/jquery/jquery.min.js"></script>
+<script src="../Packages/Libraries/components/jqueryui/jquery-ui.min.js"></script>
+<script src="../Packages/Libraries/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="js/styleguide.js"></script>

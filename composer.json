@@ -12,7 +12,9 @@
         "symfony/finder": "~2.1",
         "scan/kss-php": "1.*",
         "twbs/bootstrap": "3.3.*",
-        "namelesscoder/fluid": "*"
+        "namelesscoder/fluid": "*",
+        "components/font-awesome": "4.*",
+        "components/jqueryui": "1.*"
     },
     "authors": [
         {

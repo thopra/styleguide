@@ -15,13 +15,19 @@ $styleguide->addSource($source);
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <title>Styleguide</title>
+    <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/styleguide.css" />
-    <link rel="stylesheet" href="../Packages/Libraries/components/jqueryui/themes/start/jquery-ui.min.css" />
+
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="_contrib/highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 
 </head>
 <body>
 
-	<?php $styleguide->renderFrame(); ?>
+	<?php $styleguide->render(); ?>
+
+    <script src="../Packages/Libraries/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
 
 </body>
 </html>

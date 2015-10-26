@@ -177,6 +177,19 @@ Class Styleguide {
 	}
 
 	/**
+	 * Renders the styleguide
+	 *
+	 * @return void
+	 */
+	public function renderFrame()
+	{
+		if (!count($this->sources)) {
+			throw new \Exception("No Source specified. Please add a source or specify a path in the constructor.");
+		}
+		$this->displayTemplate( 'Layout/Frame');
+	}
+
+	/**
 	 * Renders a Template within Styleguide::templateDir
 	 * 
 	 * @var string $templateName
@@ -215,6 +228,11 @@ Class Styleguide {
 	        						)
 	        					);
 	    }
+	}
+
+	public function lastModified()
+	{
+		return 'todo: last modified';
 	}
 	
 
