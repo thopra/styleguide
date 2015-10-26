@@ -123,7 +123,14 @@ Class Section extends \Scan\Kss\Section {
                 $this->partialParams = json_decode(trim(preg_replace('/^\s*PartialParams:/i', '', $partialParamsComment))) ;
             }
         }
-        return (array)$this->partialParams;
+
+        $params = (array)$this->partialParams;
+
+        if (!isset($params['modifierClass'])) {
+            $params['modifierClass'] = '$modifierClass';
+        }
+
+        return $params;
     }
 
    /**
