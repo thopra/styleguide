@@ -57,12 +57,13 @@
     <div class="styleguide__block__preview">
         <div class="styleguide__block__elements">
             <div class="styleguide__block__element">
+                <iframe src="index.php?preview&ref=<?php echo $vars['section']->getReference(); ?>&src=<?php echo $vars['section']->getSource()->getKey(); ?>"></iframe>
                 <?php echo $vars['section']->getMarkupNormal(); ?>
             </div>
             <?php foreach ($vars['section']->getModifiers() as $modifier) { ?>
                 <div class="styleguide__block__element styleguide__element--modifier <?php ($modifier->isExtender()) ? 'styleguide__element--extender' : ''; ?>">
                     <span class="styleguide__block__element__modifier-label <?php echo ($modifier->isExtender()) ? 'styleguide__element__modifier-label--extender' : ''; ?>"><?php echo $modifier->getName(); ?></span>
-                    <?php echo $modifier->getExampleHtml(); ?>
+                    <iframe src="index.php?preview&ref=<?php echo $vars['section']->getReference(); ?>&src=<?php echo $vars['section']->getSource()->getKey(); ?>&modifier=<?php echo $modifier->getName(); ?>"></iframe>
                 </div>
             <?php } ?>
         </div>

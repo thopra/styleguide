@@ -1,3 +1,48 @@
-<div class="styleguide__wrapper">
-	<?php $Styleguide->displayTemplate($vars['template'], $vars); ?>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <title>Styleguide</title>
+    <link rel="stylesheet" href="css/styleguide.css" />
+    <link rel="stylesheet" href="../Packages/Libraries/components/jqueryui/themes/start/jquery-ui.min.css" />
+
+</head>
+<body>
+<div class="styleguide">
+
+	<ul class="styleguide__toolbar">
+		<a class="styleguide__toolbar__menu" href="#styleguideSections">Toggle menu</a>
+		<li class="styleguide__viewports">
+			<ul>
+				<li class="styleguide__viewports__xs" data-width="310"></li>
+				<li class="styleguide__viewports__sm" data-width="768"></li>
+				<li class="styleguide__viewports__md" data-width="981"></li>
+				<li class="styleguide__viewports__lg" data-width="1141"></li>
+			</ul>
+		</li>
+		<li class="styleguide__enlarge"></li>
+	</ul>
+
+	<?php $Styleguide->displayTemplate('Menu'); ?>
+
+	<div class="styleguide__wrapper">
+
+		<?php $Styleguide->displayTemplate($vars['template'], $vars); ?>
+
+	    <footer>
+	    <?php echo $Styleguide->getTitle(); ?> - <?php echo $Styleguide->lastModified(); ?>
+	    </p>
+	    </footer>
+
+	</div>
+	
 </div>
+
+<script src="../Packages/Libraries/components/jquery/jquery.min.js"></script>
+<script src="../Packages/Libraries/components/jqueryui/jquery-ui.min.js"></script>
+<script src="../Packages/Libraries/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="contrib/sidr/jquery.sidr.min.js"></script>
+<script src="js/styleguide.js"></script>
+
+</body>
+</html> 

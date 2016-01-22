@@ -1,12 +1,12 @@
-<nav role="main" class="">
+<nav role="main" id="styleguideSections" >
 
-    <a href="#"><div id="logo"><figure class="logo logo--tiny"></figure></div> Styleguide</a>
+    <!-- <a href="#"><div id="logo"><figure class="logo logo--tiny"></figure></div> Styleguide</a> -->
 
-  <ul class="nav">
+  <ul>
     <li><a href="index.php">Home </a></li>
     <?php
         foreach ($Styleguide->getSources() as $source) {
-            echo '<li><a href="#"  data-toggle="dropdown">'. $source->getName() .'</a><ul>';
+            echo '<li><a href="#">'. $source->getName() .'</a><ul>';
             foreach ($source->getParser()->getTopLevelSections() as $topLevelSection) {
                 echo '<li>
                     <a href="index.php?ref='.$topLevelSection->getReference().'&src='.$source->getKey().'" title="'.$topLevelSection->getTitle().'">' .

@@ -1,9 +1,42 @@
 @import "../../Packages/Libraries/twbs/bootstrap/less/bootstrap.less";
 @import "../../Packages/Libraries/components/font-awesome/less/font-awesome.less";
+@import "../contrib/sidr/stylesheets/jquery.sidr.bare.css";
 
+@styleguide-toolbar-height: 50px;
 @styleguide-background: @gray-dark;
 @styleguide-ui-border: fade(#fff, 10%);
+@styleguide-ui-color: #000;
+@styleguide-ui-color-text: @gray-light;
 
+.styleguide {
+
+	padding: @styleguide-toolbar-height 0 0 0;
+
+	&__wrapper {
+
+	}
+
+	&__toolbar {
+		height: @styleguide-toolbar-height;
+		background: @styleguide-ui-color;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		.list-unstyled();
+		.list-inline();
+		border-bottom: 1px @styleguide-ui-border solid;
+		> li {
+			float: right;
+		}
+
+		a {
+			color: @styleguide-ui-color-text;
+		}
+	}
+}
+
+/* 
 .styleguide__icon {
   display: inline-block;
   font: normal normal normal @fa-font-size-base/@fa-line-height-base FontAwesome; // shortening font declaration
@@ -94,10 +127,9 @@
 	}
 
 	&__wrapper {
-		&:extend(.container all);
 
 		main {
-		/* 	.make-row();
+		.make-row();
 		
 		> article {
 			.make-sm-column(9);
@@ -105,7 +137,7 @@
 		> nav#sections {			
 			.make-sm-column(3);
 			font-size: @font-size-small;
-		} */
+		}
 		}
 
 	}
@@ -145,3 +177,4 @@
 	}
 
 }
+ */

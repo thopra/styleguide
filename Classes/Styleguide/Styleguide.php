@@ -170,7 +170,11 @@ Class Styleguide {
 			throw new \Exception("No Source specified. Please add a source or specify a path in the constructor.");
 		}
 		if ($this->ref) {
-			$this->displayReference($this->sources[$this->src], $this->ref);
+			if (isset($_GET['preview'])) {
+				$this->displayPreview($this->sources[$this->src], $this->ref, $_GET['modifier']);
+			} else {
+				$this->displayReference($this->sources[$this->src], $this->ref);
+			}
 		} else {
 			$this->displayTemplate( 'Layout/Styleguide', array('template' => 'Index'));
 		}
@@ -229,6 +233,31 @@ Class Styleguide {
 	        					);
 	    }
 	}
+
+	/**
+	 * Displays the preview of a given reference and modifier class
+	 *
+	 * @var \Thopra\Styleguide\Source\SourceInterface
+	 * @var string $reference
+	 */
+	public function displayPreview($source, $reference, $modifier=false) {
+		try {
+	        $section = $source->getParser()->getSection($reference);
+
+	        $this->displayTemplate( 	'Layout/Preview', 
+							        	array(
+							        		'template' => 'Reference',
+							        		'section' => $section,
+							        		'modifier' => $modifier
+							        	)
+							        );
+
+	    } catch (UnexpectedValueException $e) {
+	        die('Preview for reference '.$reference.' could not be displayed.');
+	    }
+	}
+
+
 
 	public function lastModified()
 	{
