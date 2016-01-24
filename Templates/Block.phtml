@@ -51,28 +51,35 @@
         <?php } ?>
     </div>
 
+
     <?php
         if ($vars['section']->hasMarkup()) {
     ?>
-    <div class="styleguide__block__preview">
-        <div class="styleguide__block__elements">
-            <div class="styleguide__block__element">
-                <iframe src="index.php?preview&ref=<?php echo $vars['section']->getReference(); ?>&src=<?php echo $vars['section']->getSource()->getKey(); ?>"></iframe>
-                <?php echo $vars['section']->getMarkupNormal(); ?>
+
+    <nav class="styleguide__block__tabs">
+        <a class="styleguide__block__enlarge" href="index.php?preview&ref=<?php echo $vars['section']->getReference(); ?>&src=<?php echo $vars['styleguide']->getSource()->getKey(); ?>" target="_blank"><span class="fa fa-arrows-alt"></span></a>
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#styleguidePreview<?php echo str_replace(".", "_", $vars['section']->getReference() . $vars['styleguide']->getSource()->getKey()); ?>">Preview</a></li>
+            <li><a href="#styleguideMarkup<?php echo str_replace(".", "_", $vars['section']->getReference() . $vars['styleguide']->getSource()->getKey()); ?>">Markup</a></li>
+            <li><a href="#styleguideComments<?php echo str_replace(".", "_", $vars['section']->getReference() . $vars['styleguide']->getSource()->getKey()); ?>">Notes (ToDo)</a></li>
+        </ul>
+    </nav>
+
+    <div class="tab-content styleguide__block__preview">
+        <div class="tab-pane active styleguide__block__elements" id="styleguidePreview<?php echo str_replace(".", "_", $vars['section']->getReference() . $vars['styleguide']->getSource()->getKey()); ?>">
+            <div class="styleguide__block__element" data-preview="frame">
+                <iframe src="index.php?preview&ref=<?php echo $vars['section']->getReference(); ?>&src=<?php echo $vars['styleguide']->getSource()->getKey(); ?>"></iframe>
             </div>
-            <?php foreach ($vars['section']->getModifiers() as $modifier) { ?>
+            <?php /* foreach ($vars['section']->getModifiers() as $modifier) { ?>
                 <div class="styleguide__block__element styleguide__element--modifier <?php ($modifier->isExtender()) ? 'styleguide__element--extender' : ''; ?>">
                     <span class="styleguide__block__element__modifier-label <?php echo ($modifier->isExtender()) ? 'styleguide__element__modifier-label--extender' : ''; ?>"><?php echo $modifier->getName(); ?></span>
-                    <iframe src="index.php?preview&ref=<?php echo $vars['section']->getReference(); ?>&src=<?php echo $vars['section']->getSource()->getKey(); ?>&modifier=<?php echo $modifier->getName(); ?>"></iframe>
+                    <iframe src="index.php?preview&ref=<?php echo $vars['section']->getReference(); ?>&src=<?php echo $vars['styleguide']->getSource()->getKey(); ?>&modifier=<?php echo $modifier->getName(); ?>"></iframe>
                 </div>
-            <?php } ?>
+            <?php }  */?>
         </div>
 
-        <div class="styleguide__block__html">
-            <a href="#html_<?php echo str_replace(".", "_", $vars['section']->getReference()); ?>" class="styleguide__block__html__toggle" data-toggle="collapse">Markup anzeigen</a>
-            <div class="collapse" id="html_<?php echo str_replace(".", "_", $vars['section']->getReference()); ?>">
-                <pre class="styleguide__block__code"><code class="html"><?php echo htmlentities($vars['section']->getMarkupNormal('{class}')); ?></code></pre>
-            </div>
+        <div class="tab-pane styleguide__block__html" id="styleguideMarkup<?php echo str_replace(".", "_", $vars['section']->getReference() . $vars['styleguide']->getSource()->getKey()); ?>">
+            <pre class="styleguide__block__code"><code class="html"><?php echo htmlentities($vars['section']->getMarkupNormal('{class}')); ?></code></pre>
         </div>
     </div>
     <?php

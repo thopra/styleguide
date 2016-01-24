@@ -1,31 +1,11 @@
 <main>
-<nav id="sections">
-<ul class="nav">
-
-    <?php
-    foreach ($Styleguide->getSource()->getParser()->getSectionChildren($Styleguide->getRef(), 1) as $navSection) {
-        echo '<li><a href="#r' . $navSection->getReference() . '">' . $navSection->getDescriptionTitle() .'</a>';
-        $subSections = $Styleguide->getSource()->getParser()->getSectionChildren($navSection->getReference());
-        if ($subSections) {
-        	echo '<ul>';
-        	foreach ($subSections as $subSection) {
-    			echo '<li><a href="#r' . $subSection->getReference() . '">' . $subSection->getDescriptionTitle() .'</a>';
-        	}
-        	echo '</ul>';
-        }
-        echo '</li>';
-    }
-    ?>
-
-</ul>
-</nav>
 <article>
 
 <h1><?php echo $vars['section']->getDescriptionTitle() ?></h1>
 <p class="lead"><?php echo $vars['section']->getDescriptionText(); ?></p>
 <?php
     foreach ($Styleguide->getSource()->getParser()->getSectionChildren($Styleguide->getRef()) as $section) {
-        $Styleguide->displayTemplate('Block', array('section' => $section));
+        $Styleguide->displayTemplate('Block', array('section' => $section, 'styleguide' => $Styleguide));
     }
 ?>
 </article>

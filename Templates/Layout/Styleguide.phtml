@@ -10,18 +10,25 @@
 <body>
 <div class="styleguide">
 
-	<ul class="styleguide__toolbar">
-		<a class="styleguide__toolbar__menu" href="#styleguideSections">Toggle menu</a>
-		<li class="styleguide__viewports">
-			<ul>
-				<li class="styleguide__viewports__xs" data-width="310"></li>
-				<li class="styleguide__viewports__sm" data-width="768"></li>
-				<li class="styleguide__viewports__md" data-width="981"></li>
-				<li class="styleguide__viewports__lg" data-width="1141"></li>
-			</ul>
-		</li>
-		<li class="styleguide__enlarge"></li>
-	</ul>
+	<div class="styleguide__toolbar">
+		<a class="styleguide__toolbar__menu" href="#styleguideSections"><span></span></a>
+		<ul>
+			<li class="styleguide__viewports">
+				<ul>
+					<li class="styleguide__viewports__xs" data-width="310"></li>
+					<li class="styleguide__viewports__sm" data-width="768"></li>
+					<li class="styleguide__viewports__md" data-width="981"></li>
+					<li class="styleguide__viewports__lg" data-width="1141"></li>
+				</ul>
+			</li>
+			<li class="styleguide__enlarge"></li>
+		</ul>
+
+		<div class="styleguide__viewportrange">
+			  <input type="text" id="styleguideViewportWidth" readonly>
+			  <div id="styleguideViewportRange"></div>
+		</div>
+	</div>
 
 	<?php $Styleguide->displayTemplate('Menu'); ?>
 
@@ -35,7 +42,7 @@
 	    </footer>
 
 	</div>
-	
+	<div class="styleguide__loader"><div class="styleguide__loader__icon"><span class="fa fa-cog fa-spin fa-fw"></span></div></div>
 </div>
 
 <script src="../Packages/Libraries/components/jquery/jquery.min.js"></script>
