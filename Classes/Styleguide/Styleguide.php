@@ -43,7 +43,7 @@ Class Styleguide {
 	 */
 	public function __construct($title = 'Styleguide', $path = false) 
 	{
-		$this->defaultTemplateDir = dirname(dirname(dirname(__FILE__))) . '/Templates';
+		$this->defaultTemplateDir = 'Styleguide/Templates/default';
 		$this->setTemplateDir($this->defaultTemplateDir);
 		$this->setTitle($title);
 
