@@ -26,9 +26,5 @@
         "psr-4": {
             "Thopra\\": "Classes/"
         }
-    },
-    "config": {
-        "bin-dir": "bin",
-        "vendor-dir": "Packages/Libraries"
     }
 }
