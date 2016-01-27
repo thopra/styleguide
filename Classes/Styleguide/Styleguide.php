@@ -261,7 +261,13 @@ Class Styleguide {
 
 	public function lastModified()
 	{
-		return 'todo: last modified';
+		$modificationDate = filemtime(__FILE__);
+		foreach ($this->getSource() as $key => $value) {
+			foreach( $value->getCSSResources() as $file ) {
+				$modificationDate = max($modificationDate, filemtime($value->getPath().'/'.$file));
+			}
+		}
+		return strftime("%d. %B %Y - %H:%M", $modificationDate);
 	}
 	
 
