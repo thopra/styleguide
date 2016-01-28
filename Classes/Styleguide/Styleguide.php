@@ -44,6 +44,18 @@ Class Styleguide {
 	 */
 	protected $cache = null;
 
+	/**
+	 * @var integer
+	 */
+	protected $cacheLifetime = 5;
+
+	/**
+	 * Still have to test if this makes sense or actually slows down performance
+	 * @var bool
+	 */
+	protected $enableTemplateCache = FALSE;
+
+
 
 	/**
 	 * Constructor
@@ -137,13 +149,11 @@ Class Styleguide {
 	 */
 	public function addSource($source)
 	{
-		$cachedSource = false;
-		if ($this->cacheDir) {
+		if ($this->cache) {
 			$source = $this->parseAndCache($source);
 		} else {
 			$source->parse();
 		}
-		$source->parse();
 		$this->sources[$source->getKey()] = $source;
 	}
 
@@ -199,6 +209,24 @@ Class Styleguide {
 		return $this->cacheDir;
 	}
 
+	/**
+	 * cache lifetime (in seconds)
+	 * @var integer $ttl
+	 */
+	public function setCacheLifetime($ttl)
+	{
+		$this->cacheLifetime = (int)$ttl;
+	}
+
+	/**
+	 * gets the cache dir
+	 * @return integer 
+	 */
+	public function getCacheLifetime()
+	{	
+		return $this->cacheLifetime;
+	}
+
 
 	/**
 	 * Renders the styleguide
@@ -244,24 +272,27 @@ Class Styleguide {
 	{
 		$templateName = $templateName.'.phtml';
 		$templateName = $this->getAbsTemplatePath($templateName);
+		$Styleguide = $this;
 
 		$tag = 'template_'.str_replace(array("/","."), "_", $templateName).md5(serialize($vars));
 
-		$result = $this->cache->getItem($tag, $success);
-		if (!$success) {
+		if ($this->cache && $this->enableTemplateCache) {
+			$result = $this->cache->getItem($tag, $success);
+			if (!$success) {
+				ob_start();
+				include($templateName);
+				$result = ob_get_contents();
+				ob_end_flush();
+			    $this->cache->setItem($tag, $result);
 
-			$Styleguide = $this;
-			ob_start();
+			    return;
+
+			} 
+			echo $result;
+
+		} else {
 			include($templateName);
-			$result = ob_get_contents();
-			ob_end_flush();
-		    $this->cache->setItem($tag, $result);
-
-		    return;
-
-		} 
-
-		echo $result;
+		}
 	}
 
 	/**
@@ -395,14 +426,14 @@ Class Styleguide {
 		        'name' => 'filesystem',
 		        'options' => array(
 			        'cache_dir' => $this->getCacheDir(),
-			        'ttl' => 3 // kept short, just enough to cache all previews on one page
+			        'ttl' => $this->getCacheLifetime() // kept short, just enough to cache all previews on one page
 		        )
 		    ),
 		    'plugins' => array(
 		        // Don't throw exceptions on cache errors
-		        /*'exception_handler' => array(
+		        'exception_handler' => array(
 		            'throw_exceptions' => false
-		        ),*/
+		        ),
 		        'serializer'
 		    )
 		));
