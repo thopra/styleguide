@@ -34,6 +34,16 @@ Class Styleguide {
 	 */
 	protected $sources = array();
 
+	/**
+	 * @var string
+	 */
+	protected $cacheDir = FALSE;
+
+	/**
+	 * @var Zend_Cache
+	 */
+	protected $cache = null;
+
 
 	/**
 	 * Constructor
@@ -127,6 +137,12 @@ Class Styleguide {
 	 */
 	public function addSource($source)
 	{
+		$cachedSource = false;
+		if ($this->cacheDir) {
+			$source = $this->parseAndCache($source);
+		} else {
+			$source->parse();
+		}
 		$this->sources[$source->getKey()] = $source;
 	}
 
@@ -150,12 +166,31 @@ Class Styleguide {
 	}
 
 	/**
-	 * sets the template Dir
+	 * gets the template Dir
 	 * @return string 
 	 */
 	public function getTemplateDir($dir)
 	{	
 		return $this->templateDir;
+	}
+
+	/**
+	 * sets the cache dir - if set to false (default), caching is disabled
+	 * @var string $dir
+	 */
+	public function setCacheDir($dir)
+	{
+		$this->cacheDir = $dir;
+		$this->initCache();
+	}
+
+	/**
+	 * gets the cache dir
+	 * @return string 
+	 */
+	public function getCacheDir($dir)
+	{	
+		return $this->cacheDir;
 	}
 
 
@@ -307,6 +342,42 @@ Class Styleguide {
 		throw new \Exception("Template Directory does not exist: ".$dir, 1);
 	}
 
+	/**
+	 * gets the cache of a parsed source
+	 */
+	protected function parseAndCache($source)
+	{
+		$tag = 'source_'.str_replace(" ", "--", $source->getKey());
 
+		$result = $this->cache->getItem($tag, $success);
+		if (!$success) {
+			$source->parse();
+		    $result = $source;
+		    $this->cache->setItem($tag, $result);
+		}
+
+		return $result;
+	}
+
+	protected function initCache() 
+	{
+		if (!$this->getCacheDir()) {
+			$this->cache = null;
+			return;
+		}
+
+	    $this->cache   = \Zend\Cache\StorageFactory::factory(array(
+		    'adapter' => array(
+		        'name' => 'filesystem'
+		    ),
+		    'plugins' => array(
+		        // Don't throw exceptions on cache errors
+		        'exception_handler' => array(
+		            'throw_exceptions' => false
+		        ),
+		        'serializer'
+		    )
+		));
+	}
 
 }
