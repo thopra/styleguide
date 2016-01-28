@@ -12,7 +12,8 @@
         "symfony/finder": "~2.1",
         "scan/kss-php": "1.*",
         "namelesscoder/fluid": "*",
-        "zendframework/zend-cache": "2.5.*"
+        "zendframework/zend-cache": "2.5.*",
+        "zendframework/zend-serializer": "2.5.*"
     },
     "authors": [
         {
