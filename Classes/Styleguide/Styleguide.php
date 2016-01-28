@@ -171,7 +171,7 @@ Class Styleguide {
 		}
 		if ($this->ref) {
 			if (isset($_GET['preview'])) {
-				$this->displayPreview($this->sources[$this->src], $this->ref, $_GET['modifier']);
+				$this->displayPreview($this->sources[$this->src], $this->ref, isset($_GET['modifier']) ? $_GET['modifier'] : '');
 			} else {
 				$this->displayReference($this->sources[$this->src], $this->ref);
 			}
