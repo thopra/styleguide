@@ -46,7 +46,6 @@ abstract class AbstractSource {
 
 	public function __construct()
 	{
-		$this->parse();
 		$this->partialType = self::PARTIAL_TYPE_PHP;
 	}
 

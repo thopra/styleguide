@@ -9,6 +9,32 @@ Class Section extends \Scan\Kss\Section {
     protected $partial;
     protected $partialParams = array();
 
+    /**
+     * Creates a section with the KSS Comment Block and source file
+     *
+     * @param string $comment
+     * @param \SplFileObject $file
+     */
+    public function __construct($comment = '', \SplFileObject $file = null)
+    {
+        $this->rawComment = $comment;
+        $this->file = new File($file);
+    }
+
+    /**
+     * Returns the source filename for where the comment block was located
+     *
+     * @return string
+     */
+    public function getFilename()
+    {
+        if ($this->file === null) {
+            return '';
+        }
+
+        return $this->file->getFilename();
+    }
+
     public function getTitle() 
     {
         if ( $this->isReferenceNumeric(parent::getTitle()) ) {
