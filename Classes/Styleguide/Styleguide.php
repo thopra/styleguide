@@ -143,6 +143,7 @@ Class Styleguide {
 		} else {
 			$source->parse();
 		}
+		$source->parse();
 		$this->sources[$source->getKey()] = $source;
 	}
 
@@ -169,7 +170,7 @@ Class Styleguide {
 	 * gets the template Dir
 	 * @return string 
 	 */
-	public function getTemplateDir($dir)
+	public function getTemplateDir()
 	{	
 		return $this->templateDir;
 	}
@@ -180,6 +181,11 @@ Class Styleguide {
 	 */
 	public function setCacheDir($dir)
 	{
+		if (!is_dir($dir)) {
+			if (!mkdir($dir)) {
+				$dir = false;
+			}
+		}
 		$this->cacheDir = $dir;
 		$this->initCache();
 	}
@@ -188,7 +194,7 @@ Class Styleguide {
 	 * gets the cache dir
 	 * @return string 
 	 */
-	public function getCacheDir($dir)
+	public function getCacheDir()
 	{	
 		return $this->cacheDir;
 	}
@@ -238,9 +244,24 @@ Class Styleguide {
 	{
 		$templateName = $templateName.'.phtml';
 		$templateName = $this->getAbsTemplatePath($templateName);
-		$Styleguide = $this;
 
-		include($templateName);
+		$tag = 'template_'.str_replace(array("/","."), "_", $templateName).md5(serialize($vars));
+
+		$result = $this->cache->getItem($tag, $success);
+		if (!$success) {
+
+			$Styleguide = $this;
+			ob_start();
+			include($templateName);
+			$result = ob_get_contents();
+			ob_end_flush();
+		    $this->cache->setItem($tag, $result);
+
+		    return;
+
+		} 
+
+		echo $result;
 	}
 
 	/**
@@ -344,6 +365,9 @@ Class Styleguide {
 
 	/**
 	 * gets the cache of a parsed source
+	 * @experimental
+	 * @todo: 	seems we cannot cache the source class, since these include splFileObjects ...
+	 * 			Until that is changed, do not use this method
 	 */
 	protected function parseAndCache($source)
 	{
@@ -366,15 +390,19 @@ Class Styleguide {
 			return;
 		}
 
-	    $this->cache   = \Zend\Cache\StorageFactory::factory(array(
+	    $this->cache = \Zend\Cache\StorageFactory::factory(array(
 		    'adapter' => array(
-		        'name' => 'filesystem'
+		        'name' => 'filesystem',
+		        'options' => array(
+			        'cache_dir' => $this->getCacheDir(),
+			        'ttl' => 3 // kept short, just enough to cache all previews on one page
+		        )
 		    ),
 		    'plugins' => array(
 		        // Don't throw exceptions on cache errors
-		        'exception_handler' => array(
+		        /*'exception_handler' => array(
 		            'throw_exceptions' => false
-		        ),
+		        ),*/
 		        'serializer'
 		    )
 		));
