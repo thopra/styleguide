@@ -51,7 +51,12 @@ Class Section extends \Scan\Kss\Section {
 
     public function getDescriptionText()
     {
-        return trim(str_replace($this->getDescriptionTitle(), '', $this->getDescription()));
+        $pos = strpos($this->getDescription(),$this->getDescriptionTitle());
+        if ($pos !== false) {
+            return trim(substr_replace($this->getDescription(),'',$pos,strlen($this->getDescriptionTitle())));
+        }
+
+        return trim($this->getDescription());
     }
 
     public function setParser($parser)
