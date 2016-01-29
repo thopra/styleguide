@@ -121,7 +121,7 @@ abstract class AbstractSource {
 	public function addResource($path, $type = false)
 	{
 		if (!$type) {
-			if (strpos($path, '.js') == strlen($path)-4) {
+			if (strpos($path, '.js') == strlen($path)-3) {
 				$type = 'script';
 			} else {
 				$type = 'stylesheet';
