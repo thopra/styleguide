@@ -116,6 +116,7 @@ Class Section extends \Scan\Kss\Section {
                 && $commentSection != $this->getParametersComment()
                 && $commentSection != $this->getPartialComment()
                 && $commentSection != $this->getPartialParamsComment()
+                && $commentSection != $this->getAlignComment()
             ) {
                 $descriptionSections[] = $commentSection;
             }
@@ -158,6 +159,36 @@ Class Section extends \Scan\Kss\Section {
         return $params;
     }
 
+    /**
+     * Returns the alignment of modifier elements in markup previews as an array
+     * Every array entry represents the columns that should be displayed in one row per viewport
+     *
+     * @return string
+     */
+    public function getAlignment()
+    {
+        $alignment = $this->getAlignComment();
+        if (!$alignment) {
+            return array(1,1,1,1);
+        }
+        
+
+        $cols = explode(",", trim(preg_replace('/^\s*Align:/i', '', $alignment)));
+
+        if (!count($cols)) {
+            return array(1,1,1,1);
+        }
+
+        for ($x = 1; $x < 4; $x++) {
+            if (!isset($cols[$x])) {
+                $cols[$x] = $cols[$x] -1;
+            }
+        }
+
+        return $cols;
+       
+    }
+
    /**
      * Returns the part of the KSS Comment Block that contains the partial reference
      *
@@ -188,6 +219,25 @@ Class Section extends \Scan\Kss\Section {
 
         foreach ($this->getCommentSections() as $commentSection) {
             if (preg_match('/^\s*PartialParams:/i', $commentSection)) {
+                $params = $commentSection;
+                break;
+            }
+        }
+
+        return $params;
+    }
+
+    /**
+     * Returns the part of the KSS Comment Block defining the alignment options of the markup preview
+     *
+     * @return string
+     */
+    public function getAlignComment()
+    {
+        $params = null;
+
+        foreach ($this->getCommentSections() as $commentSection) {
+            if (preg_match('/^\s*Align:/i', $commentSection)) {
                 $params = $commentSection;
                 break;
             }
