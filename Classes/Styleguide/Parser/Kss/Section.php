@@ -164,6 +164,48 @@ Class Section extends \Scan\Kss\Section {
         return $params;
     }
 
+
+     /** 
+     * Get Tags
+     */
+    public function getTags($tagName = false)
+    {
+        $tags = array();
+        if (count($this->getParameters(true)) > 0) {
+            foreach ($this->getParameters(true) as $parameter) { 
+                $tag = FALSE;
+                if ( $this->isTag($parameter) ) {
+                    $tag = $parameter;
+                }
+
+                if ($tag) {
+                    $newTag = new \Scan\Kss\Parameter(substr($tag->getName(), 1, strlen($tag->getName())-2), $tag->getDescription());
+                    if (!$tagName || $newTag->getName() == $tagName) {
+                        $tags[] = $newTag;
+                    }
+                }
+            }
+        }
+
+        return $tags;
+    }
+
+    public function getParameters($includeTags = false) 
+    {
+        $params = parent::getParameters();
+        if ($includeTags) {
+            return $params;
+        }
+        foreach ($params as $key => $param) {
+            if ($this->isTag($param)) {
+                unset($params[$key]);
+            }
+        }
+
+        return $params;
+    }
+
+
     /**
      * Returns the alignment of modifier elements in markup previews as an array
      * Every array entry represents the columns that should be displayed in one row per viewport
@@ -172,13 +214,10 @@ Class Section extends \Scan\Kss\Section {
      */
     public function getAlignment()
     {
-        $alignment = $this->getAlignComment();
-        if (!$alignment) {
-            return array(1,1,1,1);
+        $cols = $this->getTags('align');
+        if (count($cols)) {
+            $cols = explode(",", trim(array_shift($cols)->getDescription()));
         }
-        
-
-        $cols = explode(",", trim(preg_replace('/^\s*Align:/i', '', $alignment)));
 
         if (!count($cols)) {
             return array(1,1,1,1);
@@ -192,6 +231,58 @@ Class Section extends \Scan\Kss\Section {
 
         return $cols;
        
+    }
+
+    /** 
+     * Gets wether or not the element should be used without a modifier
+     */
+    public function getStandalone()
+    {
+        if (count($this->getTags('nostandalone'))) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /** 
+     * Gets wether or not the element should be validated
+     */
+    public function getValidate()
+    {
+        if (count($this->getTags('novalidation'))) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /** 
+     * Returns the Todo Tags
+     * 
+     */
+    public function getTodo()
+    {
+        $todo = $this->getTags('todo');
+        if (count($todo) > 0) {
+            return $todo;
+        }
+
+        return false;
+    }
+
+    /** 
+     * Returns the Review Tags
+     * 
+     */
+    public function getReview()
+    {
+        $review = $this->getTags('review');
+        if (count($review) > 0) {
+            return $review;
+        }
+
+        return false;
     }
 
    /**
@@ -251,5 +342,14 @@ Class Section extends \Scan\Kss\Section {
         return $params;
     }
 
+    protected function isTag($parameter)
+    {
+        if (strpos($parameter->getName(), '!') === strlen($parameter->getName())-1 
+            || preg_match("/^\@[a-zA-Z0-9_\-]+\!/",$parameter->getDescription())) {
+            return true;
+        }
+
+        return false;
+    }
 
 }
