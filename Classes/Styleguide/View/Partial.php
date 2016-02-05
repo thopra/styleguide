@@ -58,9 +58,12 @@ class Partial {
 
 	protected function setFile()
 	{
-		$filename = $this->source->getPath().DIRECTORY_SEPARATOR.$this->source->getPartialDir().DIRECTORY_SEPARATOR.$this->path.'.'.$this->fileExtension;
+		$filename = $this->source->getPartialDir().DIRECTORY_SEPARATOR.$this->path.'.'.$this->fileExtension;
 		if (!file_exists($filename)) {
-			throw new \Exception("Partial not found: ".$filename);
+			$filename = $this->source->getPath().DIRECTORY_SEPARATOR.$filename;
+		}
+		if (!file_exists($filename)) {
+			throw new \Exception("Partial not found: ".$this->path.'.'.$this->fileExtension);
 		}
 
 		$this->file = $filename;

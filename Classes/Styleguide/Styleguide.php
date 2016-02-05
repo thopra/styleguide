@@ -331,6 +331,11 @@ Class Styleguide {
 		try {
 	        $section = $source->getParser()->getSection($reference);
 
+	        if (count($section->getTags('blank'))) {
+	        	echo $section->getMarkup();
+	        	return;
+	        }
+
 	        $this->displayTemplate( 	'Layout/Preview', 
 							        	array(
 							        		'template' => 'Reference',
