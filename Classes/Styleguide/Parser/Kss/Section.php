@@ -152,7 +152,7 @@ Class Section extends \Scan\Kss\Section {
     {
         if (!count($this->partialParams)) {
             if ($partialParamsComment = $this->getPartialParamsComment()) {
-                $this->partialParams = json_decode(trim(preg_replace('/^\s*PartialParams:/i', '', $partialParamsComment))) ;
+                $this->partialParams = json_decode(trim(preg_replace('/^\s*PartialParams:/i', '', $partialParamsComment)), true) ;
             }
         }
         $params = (array)$this->partialParams;
