@@ -75,12 +75,7 @@ Class Styleguide {
 		}
 		
 
-		if (isset($_GET['ref'])) {
-			$this->setRef($_GET['ref']);
-		}
-		if (isset($_GET['src'])) {
-			$this->setSrc($_GET['src']);
-		}
+		$this->getParams();
 	}
 
 
@@ -155,6 +150,8 @@ Class Styleguide {
 			$source->parse();
 		}
 		$this->sources[$source->getKey()] = $source;
+
+		$this->getParams();
 	}
 
 	/**
@@ -442,6 +439,28 @@ Class Styleguide {
 		        'serializer'
 		    )
 		));
+	}
+
+	protected function getDefaultSource()
+	{
+		if (!count($this->sources)) {
+			return $this->src;
+		}
+		foreach ($this->sources as $src) {
+			return $src->getKey();
+		}
+	}
+
+	protected function getParams()
+	{
+		if (isset($_GET['ref'])) {
+			$this->setRef($_GET['ref']);
+		}
+		if (isset($_GET['src'])) {
+			$this->setSrc($_GET['src']);
+		} else {
+			$this->setSrc($this->getDefaultSource());
+		}
 	}
 
 }
