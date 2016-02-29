@@ -18,7 +18,7 @@ Class UriUtility {
 
 	public function previewQr( $ref, $sourceKey )
 	{
-		return self::getQr( ($_SERVER['HTTPS'] ? "https://" : "http://") . $_SERVER['HTTP_HOST'].self::preview($ref, $sourceKey) );
+		return self::getQr( (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] ? "https://" : "http://") . $_SERVER['HTTP_HOST'].self::preview($ref, $sourceKey) );
 	}
 
 	public function getQr( $url )
