@@ -33,13 +33,13 @@ class FluidPartial extends Partial {
 	protected function getStandaloneView()
 	{
 		$paths = new \TYPO3\Fluid\View\TemplatePaths();
-/*
+
 		$paths->setTemplateRootPaths(array(
-			$this->source->getPath().DIRECTORY_SEPARATOR.$this->source->getPartialDir()
+			$this->source->getPartialDir().'/'
 		));
 		$paths->setPartialRootPaths(array(
-			$this->source->getPath().DIRECTORY_SEPARATOR.$this->source->getPartialDir()
-		));
+			$this->source->getPartialDir().'/'
+		));/*
 		$paths->setLayoutRootPaths(array(
 			dirname($this->source->getPath().DIRECTORY_SEPARATOR.$this->source->getPartialDir()) . '/Layouts/'
 		));*/

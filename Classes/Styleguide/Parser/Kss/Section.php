@@ -142,9 +142,7 @@ Class Section extends \Scan\Kss\Section {
             return false;
         }
 
-        $partial = new View\Partial($this->getPartial(), $this->getParser()->getSource());
-        $partial->setVars( $this->getPartialParams() );
-        $partial->render();
+        $this->getParser()->getSource()->renderPartial( $this->getPartial(), $this->getPartialParams() );
        
     }
 
