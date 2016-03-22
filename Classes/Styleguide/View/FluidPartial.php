@@ -39,10 +39,10 @@ class FluidPartial extends Partial {
 		));
 		$paths->setPartialRootPaths(array(
 			$this->source->getPartialDir().'/'
-		));/*
+		));
 		$paths->setLayoutRootPaths(array(
-			dirname($this->source->getPath().DIRECTORY_SEPARATOR.$this->source->getPartialDir()) . '/Layouts/'
-		));*/
+			$this->source->getPartialDir().'/'
+		));
 
 		$view = new \TYPO3\Fluid\View\TemplateView($paths);
 		$view->getTemplatePaths()->setTemplatePathAndFilename($this->file);
