@@ -177,7 +177,7 @@ Class Section extends \Kss\Section {
                 }
 
                 if ($tag) {
-                    $newTag = new \Scan\Kss\Parameter(substr($tag->getName(), 1, strlen($tag->getName())-2), $tag->getDescription());
+                    $newTag = new \Kss\Parameter(substr($tag->getName(), 1, strlen($tag->getName())-2), $tag->getDescription());
                     if (!$tagName || $newTag->getName() == $tagName) {
                         $tags[] = $newTag;
                     }
