@@ -3,7 +3,7 @@
 namespace Thopra\Styleguide\Parser\Kss;
 use Thopra\Styleguide\View;
 
-Class Section extends \Scan\Kss\Section {
+Class Section extends \Kss\Section {
 
     protected $parser;
     protected $partial;

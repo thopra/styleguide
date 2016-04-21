@@ -2,7 +2,7 @@
 
 namespace Thopra\Styleguide\Parser\Kss;
 
-Class Parser extends \Scan\Kss\Parser {
+Class Parser extends \Kss\Parser {
 
 	protected $source;
 
