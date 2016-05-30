@@ -1,0 +1,58 @@
+@import (reference) "../../Packages/Libraries/twbs/bootstrap/less/bootstrap.less";;
+
+
+#wrapper {
+	&:extend(.container all);
+
+	main {
+		.make-row();
+
+		> article {
+			.make-sm-column(9);
+		}
+		> nav#sections {			
+			.make-sm-column(3);
+			font-size: @font-size-small;
+		}
+	}
+
+}
+
+#logo {
+	width: 25px;
+	float: left;
+	margin: 0 10px 0 0;
+
+	.logo {
+		margin: 0;
+	}
+}
+
+.styleguide {
+	padding: 30px 0;
+	border-bottom: 2px @gray-lighter solid;
+}
+
+.styleguide__preview {
+	padding: @grid-gutter-width;
+	box-shadow: 0 0 5px rgba(0,0,0,0.5);
+	background: #FFF; 
+}
+.styleguide__elements { }
+.styleguide__html { 
+	.well();
+	pre {
+		margin-top: 10px;
+		padding: 0;
+	}
+	margin: 10px 0; 
+
+	.styleguide__html__toggle {
+
+	}
+}
+
+.styleguide__filename {
+	.badge();
+	.pull-right();
+}
