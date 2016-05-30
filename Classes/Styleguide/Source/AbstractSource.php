@@ -30,6 +30,11 @@ abstract class AbstractSource {
 	protected $partialType;
 
 	/**
+	 * @var array
+	 */
+	protected $resources = array('script' => array(), 'stylesheet' => array());
+
+	/**
 	 * @var string
 	 */
 	protected $partialDir = 'Partials';
@@ -41,7 +46,6 @@ abstract class AbstractSource {
 
 	public function __construct()
 	{
-		$this->parse();
 		$this->partialType = self::PARTIAL_TYPE_PHP;
 	}
 
@@ -102,6 +106,28 @@ abstract class AbstractSource {
 	public function getPath()
 	{
 		return $this->path;
+	}
+
+	public function getCSSResources()
+	{
+		return $this->resources['stylesheet'];
+	}
+
+	public function getJSResources()
+	{
+		return $this->resources['script'];
+	}
+
+	public function addResource($path, $type = false)
+	{
+		if (!$type) {
+			if (strripos($path, '.js') == strlen($path)-3) {
+				$type = 'script';
+			} else {
+				$type = 'stylesheet';
+			}
+		}
+		$this->resources[$type][] = $path;
 	}
 
 	public function excludeSections($exclude = array())

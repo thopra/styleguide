@@ -3,11 +3,37 @@
 namespace Thopra\Styleguide\Parser\Kss;
 use Thopra\Styleguide\View;
 
-Class Section extends \Scan\Kss\Section {
+Class Section extends \Kss\Section {
 
     protected $parser;
     protected $partial;
     protected $partialParams = array();
+
+    /**
+     * Creates a section with the KSS Comment Block and source file
+     *
+     * @param string $comment
+     * @param \SplFileObject $file
+     */
+    public function __construct($comment = '', \SplFileObject $file = null)
+    {
+        $this->rawComment = $comment;
+        $this->file = new File($file);
+    }
+
+    /**
+     * Returns the source filename for where the comment block was located
+     *
+     * @return string
+     */
+    public function getFilename()
+    {
+        if ($this->file === null) {
+            return '';
+        }
+
+        return $this->file->getFilename();
+    }
 
     public function getTitle() 
     {
@@ -25,7 +51,12 @@ Class Section extends \Scan\Kss\Section {
 
     public function getDescriptionText()
     {
-        return trim(str_replace($this->getDescriptionTitle(), '', $this->getDescription()));
+        $pos = strpos($this->getDescription(),$this->getDescriptionTitle());
+        if ($pos !== false) {
+            return trim(substr_replace($this->getDescription(),'',$pos,strlen($this->getDescriptionTitle())));
+        }
+
+        return trim($this->getDescription());
     }
 
     public function setParser($parser)
@@ -90,6 +121,7 @@ Class Section extends \Scan\Kss\Section {
                 && $commentSection != $this->getParametersComment()
                 && $commentSection != $this->getPartialComment()
                 && $commentSection != $this->getPartialParamsComment()
+                && $commentSection != $this->getAlignComment()
             ) {
                 $descriptionSections[] = $commentSection;
             }
@@ -110,9 +142,7 @@ Class Section extends \Scan\Kss\Section {
             return false;
         }
 
-        $partial = new View\Partial($this->getPartial(), $this->getParser()->getSource());
-        $partial->setVars( $this->getPartialParams() );
-        $partial->render();
+        $this->getParser()->getSource()->renderPartial( $this->getPartial(), $this->getPartialParams() );
        
     }
 
@@ -120,17 +150,137 @@ Class Section extends \Scan\Kss\Section {
     {
         if (!count($this->partialParams)) {
             if ($partialParamsComment = $this->getPartialParamsComment()) {
-                $this->partialParams = json_decode(trim(preg_replace('/^\s*PartialParams:/i', '', $partialParamsComment))) ;
+                $this->partialParams = json_decode(trim(preg_replace('/^\s*PartialParams:/i', '', $partialParamsComment)), true) ;
             }
         }
-
         $params = (array)$this->partialParams;
 
         if (!isset($params['modifierClass'])) {
             $params['modifierClass'] = '$modifierClass';
         }
+        
+        return $params;
+    }
+
+
+     /** 
+     * Get Tags
+     */
+    public function getTags($tagName = false)
+    {
+        $tags = array();
+        if (count($this->getParameters(true)) > 0) {
+            foreach ($this->getParameters(true) as $parameter) { 
+                $tag = FALSE;
+                if ( $this->isTag($parameter) ) {
+                    $tag = $parameter;
+                }
+
+                if ($tag) {
+                    $newTag = new \Kss\Parameter(substr($tag->getName(), 1, strlen($tag->getName())-2), $tag->getDescription());
+                    if (!$tagName || $newTag->getName() == $tagName) {
+                        $tags[] = $newTag;
+                    }
+                }
+            }
+        }
+
+        return $tags;
+    }
+
+    public function getParameters($includeTags = false) 
+    {
+        $params = parent::getParameters();
+        if ($includeTags) {
+            return $params;
+        }
+        foreach ($params as $key => $param) {
+            if ($this->isTag($param)) {
+                unset($params[$key]);
+            }
+        }
 
         return $params;
+    }
+
+
+    /**
+     * Returns the alignment of modifier elements in markup previews as an array
+     * Every array entry represents the columns that should be displayed in one row per viewport
+     *
+     * @return string
+     */
+    public function getAlignment()
+    {
+        $cols = $this->getTags('align');
+        if (count($cols)) {
+            $cols = explode(",", trim(array_shift($cols)->getDescription()));
+        }
+
+        if (!count($cols)) {
+            return array(1,1,1,1);
+        }
+
+        for ($x = 1; $x < 4; $x++) {
+            if (!isset($cols[$x])) {
+                $cols[$x] = $cols[$x] -1;
+            }
+        }
+
+        return $cols;
+       
+    }
+
+    /** 
+     * Gets wether or not the element should be used without a modifier
+     */
+    public function getStandalone()
+    {
+        if (count($this->getTags('nostandalone'))) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /** 
+     * Gets wether or not the element should be validated
+     */
+    public function getValidate()
+    {
+        if (count($this->getTags('novalidation'))) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /** 
+     * Returns the Todo Tags
+     * 
+     */
+    public function getTodo()
+    {
+        $todo = $this->getTags('todo');
+        if (count($todo) > 0) {
+            return $todo;
+        }
+
+        return false;
+    }
+
+    /** 
+     * Returns the Review Tags
+     * 
+     */
+    public function getReview()
+    {
+        $review = $this->getTags('review');
+        if (count($review) > 0) {
+            return $review;
+        }
+
+        return false;
     }
 
    /**
@@ -171,5 +321,33 @@ Class Section extends \Scan\Kss\Section {
         return $params;
     }
 
+    /**
+     * Returns the part of the KSS Comment Block defining the alignment options of the markup preview
+     *
+     * @return string
+     */
+    public function getAlignComment()
+    {
+        $params = null;
+
+        foreach ($this->getCommentSections() as $commentSection) {
+            if (preg_match('/^\s*Align:/i', $commentSection)) {
+                $params = $commentSection;
+                break;
+            }
+        }
+
+        return $params;
+    }
+
+    protected function isTag($parameter)
+    {
+        if (strpos($parameter->getName(), '!') === strlen($parameter->getName())-1 
+            || preg_match("/^\@[a-zA-Z0-9_\-]+\!/",$parameter->getDescription())) {
+            return true;
+        }
+
+        return false;
+    }
 
 }

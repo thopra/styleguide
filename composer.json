@@ -10,9 +10,11 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/finder": "~2.1",
-        "scan/kss-php": "1.*",
-        "twbs/bootstrap": "3.3.*",
-        "namelesscoder/fluid": "*"
+        "kss-php/kss-php": "2.0.*",
+        "namelesscoder/fluid": "*",
+        "zendframework/zend-cache": "2.5.*",
+        "zendframework/zend-serializer": "2.5.*",
+        "endroid/qrcode": "^1.5"
     },
     "authors": [
         {
@@ -27,9 +29,5 @@
         "psr-4": {
             "Thopra\\": "Classes/"
         }
-    },
-    "config": {
-        "bin-dir": "bin",
-        "vendor-dir": "Packages/Libraries"
     }
 }
