@@ -174,6 +174,24 @@ Class Styleguide {
 	}
 
 	/**
+	 * sets the default template Dir
+	 * @var string $dir
+	 */
+	public function setDefaultTemplateDir($dir)
+	{
+		$this->defaultTemplateDir = $dir;
+	}
+
+	/**
+	 * gets the default template Dir
+	 * @return string 
+	 */
+	public function getDefaultTemplateDir()
+	{	
+		return $this->defaultTemplateDir;
+	}
+
+	/**
 	 * gets the template Dir
 	 * @return string 
 	 */
