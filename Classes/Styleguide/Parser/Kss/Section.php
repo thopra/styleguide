@@ -69,7 +69,7 @@ Class Section extends \Kss\Section {
         return $this->parser;
     }
 
-    public function getMarkup()
+    public function getMarkup($autoIndent = TRUE)
     {
         $markup = parent::getMarkup();
 
@@ -78,6 +78,11 @@ Class Section extends \Kss\Section {
             $this->renderPartial();
             $markup = ob_get_contents();
             ob_end_clean();
+        }
+
+        if ($autoIndent) {
+            $indenter = new \Gajus\Dindent\Indenter();
+            $markup = $indenter->indent($markup);
         }
 
         return $markup;

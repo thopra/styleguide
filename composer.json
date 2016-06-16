@@ -15,7 +15,8 @@
         "namelesscoder/fluid": "*",
         "zendframework/zend-cache": "2.5.*",
         "zendframework/zend-serializer": "2.5.*",
-        "endroid/qrcode": "^1.5"
+        "endroid/qrcode": "^1.5",
+        "gajus/dindent": "2.0.*"
     },
     "authors": [
         {
