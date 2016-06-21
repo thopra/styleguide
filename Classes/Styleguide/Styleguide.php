@@ -106,7 +106,7 @@ Class Styleguide {
 	/**
 	 * @return string
 	 */
-	public function getSrc($src)
+	public function getSrc()
 	{
 		return $this->src;
 	}
