@@ -85,6 +85,11 @@ Class Section extends \Kss\Section {
             $markup = $indenter->indent($markup);
         }
 
+        // prevent empty strings (which will be interpreted as if there is markup)
+        if (empty($markup)) {
+            $markup = null;
+        }
+
         return $markup;
     }
 
