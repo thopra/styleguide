@@ -6,22 +6,22 @@ use Endroid\QrCode\QrCode;
 
 Class UriUtility {
 
-	public function section( $ref, $sourceKey )
+	public static function section( $ref, $sourceKey )
 	{
 		return $_SERVER['SCRIPT_NAME'].'?ref='.$ref.'&src='.$sourceKey;
 	}
 	
-	public function preview( $ref, $sourceKey )
+	public static function preview( $ref, $sourceKey )
 	{
 		return $_SERVER['SCRIPT_NAME'].'?preview&ref='.$ref.'&src='.$sourceKey;
 	}
 
-	public function previewQr( $ref, $sourceKey )
+	public static function previewQr( $ref, $sourceKey )
 	{
 		return self::getQr( (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] ? "https://" : "http://") . $_SERVER['HTTP_HOST'].self::preview($ref, $sourceKey) );
 	}
 
-	public function getQr( $url )
+	public static function getQr( $url )
 	{
 		$qrCode = new QrCode();
 		return $qrCode
