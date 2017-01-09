@@ -32,7 +32,8 @@ class FluidPartial extends Partial {
 
 	protected function getStandaloneView()
 	{
-		$paths = new \TYPO3Fluid\Fluid\View\TemplatePaths();
+		$view = new \TYPO3Fluid\Fluid\View\TemplateView();
+		$paths = $view->getTemplatePaths();
 
 		$paths->setTemplateRootPaths(array(
 			$this->source->getPartialDir().'/'
@@ -44,7 +45,6 @@ class FluidPartial extends Partial {
 			$this->source->getPartialDir().'/'
 		));
 
-		$view = new \TYPO3Fluid\Fluid\View\TemplateView($paths);
 		$view->getTemplatePaths()->setTemplatePathAndFilename($this->file);
 
 		return $view;
