@@ -55,6 +55,16 @@ Class Styleguide {
 	 */
 	protected $enableTemplateCache = FALSE;
 
+	/**
+	 * A brand name that should be used as the "Logo"
+	 */
+	protected $brand = FALSE;
+
+	/**
+	 * A brand name that should be used as the "Logo"
+	 */
+	protected $navLevels = 2;
+
 
 
 	/**
@@ -242,6 +252,41 @@ Class Styleguide {
 		return $this->cacheLifetime;
 	}
 
+	/**
+	 * brand
+	 * @var string $brand
+	 */
+	public function setBrand($brand)
+	{
+		$this->brand = $brand;
+	}
+
+	/**
+	 * brand
+	 * @return string 
+	 */
+	public function getBrand()
+	{	
+		return $this->brand;
+	}
+
+	/**
+	 * set navigation levels
+	 * @var integer $levels
+	 */
+	public function setNavLevels($levels)
+	{
+		$this->navLevels = (int)$levels;
+	}
+
+	/**
+	 * get navigation levels
+	 * @return integer 
+	 */
+	public function getNavLevels()
+	{	
+		return $this->navLevels;
+	}
 
 	/**
 	 * Renders the styleguide
