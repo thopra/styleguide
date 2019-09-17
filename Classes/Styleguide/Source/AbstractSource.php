@@ -8,6 +8,7 @@ abstract class AbstractSource {
 
 	const PARTIAL_TYPE_PHP = 'phtml';
 	const PARTIAL_TYPE_FLUID = 'fluid';
+	const PARTIAL_TYPE_TWIG = 'twig';
 
 	/**
 	 * @var string
@@ -86,11 +87,19 @@ abstract class AbstractSource {
 
 	public function setPartialType($type = null) 
 	{
-		if ($type == self::PARTIAL_TYPE_FLUID) {
-			$this->partialType = self::PARTIAL_TYPE_FLUID;
-		} else {
-			$this->partialType = self::PARTIAL_TYPE_PHP;
-		}
+	    switch ($type) {
+            case self::PARTIAL_TYPE_FLUID:
+                $this->partialType = self::PARTIAL_TYPE_FLUID;
+                break;
+
+            case self::PARTIAL_TYPE_TWIG:
+                $this->partialType = self::PARTIAL_TYPE_TWIG;
+                break;
+
+            case self::PARTIAL_TYPE_PHP:
+            default:
+                $this->partialType = self::PARTIAL_TYPE_PHP;
+        }
 	}
 
 	public function getSections()
@@ -165,6 +174,11 @@ abstract class AbstractSource {
 	public function renderPartial($partialName, $vars = array(), $directOutput = true)
 	{
 		switch ($this->partialType) {
+
+            case self::PARTIAL_TYPE_TWIG:
+                $partial = new View\TwigPartial($partialName, $this);
+                break;
+
 			case self::PARTIAL_TYPE_FLUID:
 				$partial = new View\FluidPartial($partialName, $this);
 				break;

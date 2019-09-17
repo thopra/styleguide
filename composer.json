@@ -13,6 +13,7 @@
         "kss-php/kss-php": "2.0.*",
         "twbs/bootstrap": "3.3.*",
         "typo3fluid/fluid": "*",
+        "twig/twig": "2.11.*",
         "zendframework/zend-cache": "2.5.*",
         "zendframework/zend-serializer": "2.5.*",
         "endroid/qr-code": "^1.5",
