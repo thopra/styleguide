@@ -1,0 +1,21 @@
+/*
+    Fluid example
+
+    An example using fluid partials
+
+    Styleguide 1
+ */
+
+/*
+    Example component
+
+    An example component with a partial called "Test"
+
+    Partial: Test
+
+    PartialParams: {
+        "foo": "bar"
+    }
+
+    Styleguide 1.1
+ */

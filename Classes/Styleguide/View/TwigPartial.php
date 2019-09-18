@@ -4,7 +4,7 @@ namespace Thopra\Styleguide\View;
 
 class TwigPartial extends Partial {
 
-    protected $fileExtension = 'html';
+    protected $fileExtension = 'twig';
 
     public function render($render = true)
     {
@@ -31,13 +31,17 @@ class TwigPartial extends Partial {
 
     protected function getView()
     {
-        $filename =  $this->source->getPath().DIRECTORY_SEPARATOR.$this->source->getPartialDir().DIRECTORY_SEPARATOR.$this->path.'.'.$this->fileExtension;
+        $dir = realpath($this->source->getPartialDir());
+        if (!is_dir($dir)) {
+            $dir = $this->source->getPath() . DIRECTORY_SEPARATOR . $this->source->getPartialDir();
+        }
+        $filename =  $dir.DIRECTORY_SEPARATOR.$this->path.'.'.$this->fileExtension;
 
-        if (!file_exists($filename)) {
+        if (!is_dir($dir) || !file_exists($filename)) {
             throw new \Exception("Partial not found: ".$this->path.'.'.$this->fileExtension);
         }
 
-        $loader = new \Twig\Loader\FilesystemLoader($this->source->getPath().DIRECTORY_SEPARATOR.$this->source->getPartialDir());
+        $loader = new \Twig\Loader\FilesystemLoader($dir);
 
         $twig = new \Twig\Environment($loader);
 

@@ -1,13 +1,22 @@
 <?php
 
+ini_set('display_errors', 'on');
+
 require_once('../Packages/Libraries/autoload.php');
 $styleguide = new \Thopra\Styleguide\Styleguide();
 $styleguide->setTitle('Test Styleguide');
 
-$source = new \Thopra\Styleguide\Source\Source(dirname(__FILE__), 'default', 'Fluid source');
-$source->setPartialType(\Thopra\Styleguide\Source\AbstractSource::PARTIAL_TYPE_FLUID);
+$source = new \Thopra\Styleguide\Source\Source(dirname(__FILE__).'/Examples/Default', 'default', 'Default');
+
+$fluidSource = new \Thopra\Styleguide\Source\Source(dirname(__FILE__).'/Examples/Fluid', 'fluid', 'Fluid');
+$fluidSource->setPartialType(\Thopra\Styleguide\Source\AbstractSource::PARTIAL_TYPE_FLUID);
+
+$twigSource = new \Thopra\Styleguide\Source\Source(dirname(__FILE__).'/Examples/Twig', 'twig', 'Twig');
+$twigSource->setPartialType(\Thopra\Styleguide\Source\AbstractSource::PARTIAL_TYPE_TWIG);
 
 $styleguide->addSource($source);
+$styleguide->addSource($fluidSource);
+$styleguide->addSource($twigSource);
 ?>
 
 <!DOCTYPE html>
@@ -25,11 +34,7 @@ $styleguide->addSource($source);
 </head>
 <body>
 
-	<?php $styleguide->render(); ?>
-
-	<?php 
-		$source->renderPartial('Test');
-	?>
+    <?php $styleguide->render(); ?>
 
     <script src="../Packages/Libraries/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
 
