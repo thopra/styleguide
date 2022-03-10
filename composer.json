@@ -10,7 +10,7 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/finder": ">=2.1",
-        "kss-php/kss-php": "2.0.*",
+        "thopra/kss-php": "dev-master",
         "twbs/bootstrap": "3.3.*",
         "typo3fluid/fluid": "*",
         "twig/twig": "2.11.*",
