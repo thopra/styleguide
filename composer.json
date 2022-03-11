@@ -1,6 +1,9 @@
 {
     "name": "thopra/styleguide",
     "description": "Styleguide skeleton based on kss-php, containing documentation of bootstrap components",
+    "repositories": [
+        { "type": "vcs", "url": "https://github.com/thopra/kss-php.git" }
+    ],
     "keywords": [
         "kss",
         "styleguide",
