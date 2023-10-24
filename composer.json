@@ -13,7 +13,7 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/finder": ">=2.1",
-        "kss-php/kss-php": "dev-master",
+        "kss-php/kss-php": "dev-symfony6",
         "twbs/bootstrap": "3.3.*",
         "typo3fluid/fluid": "*",
         "twig/twig": "3.3.*",
